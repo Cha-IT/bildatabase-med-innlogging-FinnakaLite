@@ -8,8 +8,21 @@ router.get('/',(req, res) => {
     res.sendFile(path.join(__dirname,'../public/index.html'));
 })
 
-router.post('/',(req, res) => {
-    const {epost, password} = req.body;
+router.post('/',async (req, res) => {
+    const {email, password} = req.body;
 
-    const bruker = db.prepare("SELECT * FROM person WHERE epost = ?").get(epost);
+    const user = db.prepare("SELECT * FROM person WHERE email = ?").get(email);
+    if (!user) {
+        return res.status(401).json({ error: 'Wrong email or password' });
+    }
+
+    const validPassword = password === user.password;
+    if (!validPassword) {
+        return res.status(401).json({ error: 'Wrong email or password' });
+    }
+
+    req.session.user = {id: user.id, firstName: user.firstName}
+    req.json({message: "Successfully logged in"});
 })
+
+module.exports = router;
