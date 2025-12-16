@@ -6,5 +6,8 @@ const bcrypt = require("bcrypt");
 
 router.get("/", requiresLogin, (req, res) => {
     res.send(`<p>Welcome to a protected page, ${req.session.firstName}!
-        <button onclick></button>`)
-})
+        <button onclick="logOut()">Log Out</button>
+        <script src="/javascripts/loginHandler.js"></script>`)
+});
+
+module.exports = router;
