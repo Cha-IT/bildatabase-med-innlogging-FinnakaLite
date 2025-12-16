@@ -31,7 +31,7 @@ app.use(
         saveUninitialized: false,
         cookie: {secure:false}
     })
-);
+)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

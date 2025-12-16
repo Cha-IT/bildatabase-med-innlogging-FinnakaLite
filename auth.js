@@ -8,4 +8,4 @@ function requiresLogin(req, res, next) {
     next();
 }
 
-module.exports = requiresLogin();
+module.exports = requiresLogin;
