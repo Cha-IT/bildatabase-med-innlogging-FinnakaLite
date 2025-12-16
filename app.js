@@ -10,9 +10,11 @@ const bcrypt = require('bcrypt');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const personerRouter = require('./routes/personer');
-const bilerRouter = require('./routes/biler');
+const peopleRouter = require('./routes/people');
+const carsRouter = require('./routes/cars');
 const loginRouter = require('./routes/login');
+const protectedRouter = require('./routes/protected');
+const logoutRouter = require('./routes/logout');
 
 const app = express();
 
@@ -22,10 +24,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(
+    session({
+        secret: "secrettestkey",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {secure:false}
+    })
+);
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/personer', personerRouter);
-app.use('/biler', bilerRouter);
+app.use('/personer', peopleRouter);
+app.use('/biler', carsRouter);
 app.use('/login', loginRouter);
+app.use('/protected', protectedRouter);
+app.use('/logout', logoutRouter);
 
 module.exports = app;
